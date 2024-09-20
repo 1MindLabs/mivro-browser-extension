@@ -44,3 +44,32 @@ async function handleSend(inputElement, chatDiv) {
     return false;
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const messages = [
+    "🍽️ Ready to whip up something delicious? Ask Savora!",
+    "👩‍🍳 What's cooking today? Let Savora inspire you!",
+    "🧑‍🍳 Need recipe magic? Savora has your back!",
+    "🌟 Discover your next favorite meal with Savora!",
+    "🍲 Craving something special? Ask Savora for a recipe!",
+    "🥗 Savora serves up recipes for every craving!",
+    "🍕 Hungry for ideas? Let Savora guide you to the perfect dish!",
+    "🥘 Unlock a world of flavors with Savora's recipes!",
+    "🍔 What's on the menu tonight? Savora knows!",
+    "🍝 Let's find your perfect recipe, Savora style!",
+    "🥑 Feeling adventurous? Ask Savora for a unique recipe!",
+    "🍳 From breakfast to dinner, Savora's got it covered!",
+    "🍰 Sweet tooth calling? Savora has dessert ideas too!",
+    "🍛 Spice up your day with Savora's top recipes!",
+    "🌮 Craving something quick? Let Savora help you out!",
+  ];
+
+  // Select a random message
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+  // Update the chat header with the random message
+  const chatHeader = document.querySelector(".chat-header");
+  if (chatHeader) {
+    chatHeader.textContent = randomMessage;
+  }
+});
