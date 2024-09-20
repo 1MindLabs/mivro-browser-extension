@@ -10,6 +10,7 @@
   --item-width: 5.25rem;
   --sage: #7c8e76;
   --mivro-blue: #8fd0ff;
+  --mivro-green: #8cc54b;
 }
 
 /* Global Styles */
@@ -55,7 +56,7 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevent scrolling on the main container */
+  overflow: hidden;
 }
 
 /* Chat */
@@ -63,12 +64,12 @@ body {
   flex-grow: 1;
   overflow-y: auto;
   padding-bottom: 48px;
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .chat::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none;
 }
 
 .chat-header {
@@ -83,7 +84,7 @@ body {
 .input-container {
   position: fixed;
   bottom: 60px;
-  width: calc(100% - 12px); /* Adjust width to account for padding and margin */
+  width: calc(100% - 12px);
   padding: 4px;
   margin: 0 4px 4px 4px;
   background: var(--white);
@@ -91,7 +92,7 @@ body {
   border-radius: 20px;
   display: flex;
   align-items: center;
-  box-shadow: 0px 4px 16px rgba(148, 156, 169, 0.15);
+  box-shadow: 0px 4px 16px rgba(148, 156, 169, 0.35);
 }
 
 .input-container textarea {
@@ -101,9 +102,9 @@ body {
   background: var(--white);
   border-radius: 20px;
   font-family: "Mulish", sans-serif;
-  overflow-y: hidden; /* Hide vertical scrollbar */
-  resize: none; /* Prevent manual resizing */
-  line-height: 20px; /* Set line height in pixels */
+  overflow-y: hidden;
+  resize: none;
+  line-height: 20px;
   font-size: 14px;
 }
 
@@ -145,6 +146,7 @@ body {
   background: var(--white);
   overflow-wrap: break-word;
   width: fit-content;
+  box-shadow: 0px 4px 16px rgba(148, 156, 169, 0.15);
 }
 
 .message-user {
@@ -186,7 +188,7 @@ body {
 .nav-list {
   display: flex;
   list-style-type: none;
-  gap: calc(var(--gap) * 2); /* Increased gap */
+  gap: calc(var(--gap) * 2);
   position: relative;
 }
 

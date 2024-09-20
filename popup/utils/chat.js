@@ -1,19 +1,29 @@
 import { marked } from "../lib/marked.esm.js";
 
-export async function getSavoraResponse(message) {
+export async function getSavoraResponse(userMessage) {
+  console.log(`User message is: ${userMessage}`);
   const apiUrl = "http://127.0.0.1:5000/api/v1/ai/savora";
 
   try {
+    const headers = {
+      "Content-Type": "application/json",
+      "Mivro-Email": "test1@mivro.org",
+      "Mivro-Password": "test@1",
+    };
+
+    console.log("Headers:", headers);
+
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: headers,
       body: JSON.stringify({
-        email: "admin@mivro.org",
-        message: message,
+        type: "text",
+        message: userMessage,
       }),
     });
+
+    console.log("Response status:", response.status);
+    console.log("Response headers:", response.headers);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -22,7 +32,7 @@ export async function getSavoraResponse(message) {
     const data = await response.json();
     return marked.parse(data.response);
   } catch (error) {
-    console.error("Error sending message:", error);
+    console.error("Error fetching Savora response:", error);
     throw error;
   }
 }
@@ -45,6 +55,7 @@ export function renderMessage(content, parent, isUser = true) {
 
 export async function sendHandler(inputElement, chatDiv) {
   const message = inputElement.value.trim();
+  console.log(`Message to send: ${message}`);
 
   if (!message) {
     console.log("No message to send");
