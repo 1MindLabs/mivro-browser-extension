@@ -33,7 +33,7 @@ export async function getSavoraResponse(userMessage) {
     return marked.parse(data.response);
   } catch (error) {
     console.error("Error fetching Savora response:", error);
-    throw error;
+    return "Sorry, I am unable to respond at the moment.";
   }
 }
 
