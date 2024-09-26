@@ -7,6 +7,24 @@ const sendButton = document.querySelector(".send");
 const inputElement = document.querySelector(".inp");
 const chatHeader = document.querySelector(".chat-header");
 
+let uploadedFile = null;
+
+// Handle file upload
+document.getElementById("upload-button").addEventListener("click", function () {
+  document.getElementById("file-input").click();
+});
+
+document
+  .getElementById("file-input")
+  .addEventListener("change", function (event) {
+    uploadedFile = event.target.files[0]; // Get the first uploaded file
+    console.log("Uploaded file:", uploadedFile);
+  });
+
+document.addEventListener("DOMContentLoaded", async () => {
+  initializeNavigation();
+});
+
 sendButton.addEventListener("click", async () => {
   let isHandeled = await handleSend(inputElement, chatDiv);
   console.log("isHandeled:", isHandeled);
@@ -24,10 +42,6 @@ inputElement.addEventListener("keyup", (event) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", async () => {
-  initializeNavigation();
-});
-
 const textarea = document.querySelector(".input-container textarea");
 const maxRows = 3;
 const lineHeight = 20; // Line height in pixels (must match the CSS line-height)
@@ -35,7 +49,7 @@ const lineHeight = 20; // Line height in pixels (must match the CSS line-height)
 initializeTextarea(textarea, maxRows, lineHeight, handleSend, chatDiv);
 
 async function handleSend(inputElement, chatDiv) {
-  let condition = await sendHandler(inputElement, chatDiv);
+  let condition = await sendHandler(inputElement, chatDiv, uploadedFile);
   console.log("sendHandler:", condition);
   resetTextarea(textarea);
   if (condition) {
@@ -64,10 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "🌮 Craving something quick? Let Savora help you out!",
   ];
 
-  // Select a random message
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-
-  // Update the chat header with the random message
   const chatHeader = document.querySelector(".chat-header");
   if (chatHeader) {
     chatHeader.textContent = randomMessage;

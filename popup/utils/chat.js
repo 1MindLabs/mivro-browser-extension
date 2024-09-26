@@ -1,10 +1,36 @@
 import { marked } from "../lib/marked.esm.js";
 
-export async function getSavoraResponse(userMessage) {
+export async function getSavoraResponse(userMessage, uploadedFile) {
   console.log(`User message is: ${userMessage}`);
+  console.log("Uploaded file:", uploadedFile);
+
   const apiUrl = "http://127.0.0.1:5000/api/v1/ai/savora";
 
   try {
+    if (uploadedFile) {
+      const formData = new FormData();
+      formData.append("media", uploadedFile);
+      formData.append("message", userMessage);
+      formData.append("type", "media");
+
+      const headers = {
+        "Mivro-Email": "test1@mivro.org",
+        "Mivro-Password": "test@1",
+      };
+
+      const response = await fetch(apiUrl, {
+        headers: headers,
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return marked.parse(data.response);
+    }
     const headers = {
       "Content-Type": "application/json",
       "Mivro-Email": "test1@mivro.org",
@@ -53,7 +79,7 @@ export function renderMessage(content, parent, isUser = true) {
   return messageDiv;
 }
 
-export async function sendHandler(inputElement, chatDiv) {
+export async function sendHandler(inputElement, chatDiv, uploadedFile) {
   const message = inputElement.value.trim();
   console.log(`Message to send: ${message}`);
 
@@ -63,11 +89,17 @@ export async function sendHandler(inputElement, chatDiv) {
   }
 
   inputElement.value = "";
-  renderMessage(message, chatDiv);
+  uploadedFile
+    ? renderMessage(
+        `<span class = "file-name">${uploadedFile.name}<span><br>${message}`,
+        chatDiv
+      )
+    : renderMessage(message, chatDiv);
 
   try {
-    const response = await getSavoraResponse(message);
+    const response = await getSavoraResponse(message, uploadedFile);
     renderMessage(response, chatDiv, false);
+    uploadedFile = null;
     return true;
   } catch (error) {
     console.error("Error getting Savora response:", error);

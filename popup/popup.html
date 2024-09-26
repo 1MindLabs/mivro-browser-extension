@@ -18,7 +18,8 @@
     <div class="chat container hidden">
       <div class="chat-header"></div>
       <div class="input-container">
-        <div class="icon-div">
+        <div class="icon-div" id="upload-button">
+          <input type="file" id="file-input" style="display: none" />
           <img
             src="../assets/oth-icons/attachment.png"
             alt="attach"
@@ -31,7 +32,7 @@
           placeholder="Message Savora..."
           rows="1"
         ></textarea>
-        <div class="send icon-div">
+        <div class="send icon-div" id="send-button">
           <img
             src="../assets/oth-icons/send.png"
             alt="send"
