@@ -1,13 +1,18 @@
 import { initializeNavigation } from "./utils/navigation.js";
 import { getSavoraResponse, renderMessage, sendHandler } from "./utils/chat.js";
 import { initializeTextarea, resetTextarea } from "./utils/textareaHandler.js";
+import { loadMessage } from "./utils/loadMessage.js";
+
+import { marked } from "./lib/marked.esm.js";
 
 const chatDiv = document.querySelector(".chat");
+const chatNav = document.querySelector("#chat-nav");
 const sendButton = document.querySelector(".send");
 const inputElement = document.querySelector(".inp");
 const chatHeader = document.querySelector(".chat-header");
 
 let uploadedFile = null;
+let history = null;
 
 // Handle file upload
 document.getElementById("upload-button").addEventListener("click", function () {
@@ -23,6 +28,12 @@ document
 
 document.addEventListener("DOMContentLoaded", async () => {
   initializeNavigation();
+  history = await loadMessage();
+  console.log("History:", history);
+  for (const chat of history) {
+    renderMessage(chat.user_message, chatDiv, true);
+    renderMessage(marked.parse(chat.bot_response), chatDiv, false);
+  }
 });
 
 sendButton.addEventListener("click", async () => {
