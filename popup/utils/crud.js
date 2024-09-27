@@ -18,15 +18,32 @@ export async function deleteMessage(userMessageContainer) {
 
   if (response.ok) {
     const nextDiv = userMessageContainer.nextElementSibling;
-    console.log("Next element to delete:", nextDiv); // Debugging line
+    console.log("Next element to delete:", nextDiv);
     userMessageContainer.remove();
     if (nextDiv) {
       nextDiv.remove();
-      console.log("Next element removed successfully."); // Debugging line
+      console.log("Next element removed successfully.");
     } else {
-      console.log("No next element found."); // Debugging line
+      console.log("No next element found.");
     }
   } else {
     throw new Error(`HTTP error! status: ${response.status}`);
+  }
+}
+
+export async function copyMessage(userMessageContainer) {
+  const userMessageDiv = userMessageContainer.querySelector(".message-user");
+  const userMessage = userMessageDiv.innerText;
+
+  const nextDiv = userMessageContainer.nextElementSibling;
+
+  if (nextDiv) {
+    const botMessageDiv = nextDiv.querySelector(".message-bot");
+    const botMessage = botMessageDiv.innerText;
+    console.log("Next element to delete:", nextDiv);
+    navigator.clipboard.writeText(botMessage);
+    console.log("Message copied to clipboard:", userMessage);
+  } else {
+    console.log("No next element found.");
   }
 }

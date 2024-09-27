@@ -6,7 +6,6 @@ import { loadMessage } from "./utils/loadMessage.js";
 import { marked } from "./lib/marked.esm.js";
 
 const chatDiv = document.querySelector(".chat");
-const chatNav = document.querySelector("#chat-nav");
 const sendButton = document.querySelector(".send");
 const inputElement = document.querySelector(".inp");
 const chatHeader = document.querySelector(".chat-header");

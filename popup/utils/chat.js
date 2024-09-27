@@ -1,5 +1,5 @@
 import { marked } from "../lib/marked.esm.js";
-import { deleteMessage } from "./crud.js";
+import { deleteMessage, copyMessage } from "./crud.js";
 
 export async function getSavoraResponse(userMessage, uploadedFile) {
   console.log(`User message is: ${userMessage}`);
@@ -96,6 +96,9 @@ export function renderMessage(content, parent, isUser = true) {
     copyButton.classList.add("copy-button");
     copyButton.classList.add("img-button");
     copyButton.src = chrome.runtime.getURL("./assets/oth-icons/copy.png");
+    copyButton.addEventListener("click", () => {
+      copyMessage(messageContainer);
+    });
 
     const crudIconDiv = document.createElement("div");
     crudIconDiv.classList.add("crud-icon-div");
