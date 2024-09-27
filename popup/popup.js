@@ -35,6 +35,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+// Profile page
+document.addEventListener("DOMContentLoaded", function () {
+  const profileOptions = document.querySelectorAll(".profile-option");
+
+  profileOptions.forEach((option) => {
+    const textElement = option.querySelector(".profile-text");
+    const text = textElement.textContent
+      .trim()
+      .toLowerCase()
+      .replace(/ /g, "-");
+
+    option.addEventListener("click", function () {
+      window.open(`https://mivro.org/settings/${text}`, "_blank");
+    });
+  });
+});
+
 sendButton.addEventListener("click", async () => {
   let isHandeled = await handleSend(inputElement, chatDiv);
   console.log("isHandeled:", isHandeled);
