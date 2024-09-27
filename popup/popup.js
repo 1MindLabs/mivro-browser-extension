@@ -91,7 +91,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const randomMessage = messages[Math.floor(Math.random() * messages.length)];
   const chatHeader = document.querySelector(".chat-header");
+
+  function typeText(element, text, delay = 100) {
+    let index = 0;
+    function type() {
+      if (index < text.length) {
+        element.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, delay);
+      }
+    }
+    type();
+  }
+
   if (chatHeader) {
-    chatHeader.textContent = randomMessage;
+    chatHeader.textContent = ""; // Clear any existing text
+    typeText(chatHeader, randomMessage);
   }
 });
