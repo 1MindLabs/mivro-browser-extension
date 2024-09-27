@@ -156,6 +156,31 @@ body {
   transform: scale(0.9);
 }
 
+.message-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.crud-icon-div {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.img-button {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  overflow: visible;
+}
+
+.img-button:hover {
+  background: #d3d3d3;
+}
+
 .message {
   margin: 4px 0;
   padding: 8px 16px;
@@ -169,9 +194,10 @@ body {
 
 .message-user {
   font-size: 12px;
-  align-self: flex-end;
+  align-self: self-end;
   max-width: 70%;
   background: var(--mivro-blue);
+  margin-left: auto;
 }
 
 .file-name {

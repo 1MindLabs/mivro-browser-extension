@@ -26,8 +26,8 @@ function fetchProductInfo(sendResponse, product) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Mivro-Email": "test@gmail.com",
-      "Mivro-Password": "test123",
+      "Mivro-Email": "test1@mivro.org",
+      "Mivro-Password": "test@1",
     },
     body: JSON.stringify({
       product_keyword: product,

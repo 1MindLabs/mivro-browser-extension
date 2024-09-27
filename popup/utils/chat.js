@@ -1,4 +1,5 @@
 import { marked } from "../lib/marked.esm.js";
+import { deleteMessage } from "./crud.js";
 
 export async function getSavoraResponse(userMessage, uploadedFile) {
   console.log(`User message is: ${userMessage}`);
@@ -72,7 +73,50 @@ export function renderMessage(content, parent, isUser = true) {
   messageDiv.classList.add("message");
   messageDiv.classList.add(isUser ? "message-user" : "message-bot");
   messageDiv.innerHTML = content;
-  parent.appendChild(messageDiv);
+
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("message-container");
+  messageContainer.classList.add(isUser ? "user" : "bot");
+
+  if (isUser == true) {
+    const editButton = document.createElement("img");
+    editButton.classList.add("edit-button");
+    editButton.classList.add("img-button");
+    editButton.src = chrome.runtime.getURL("./assets/oth-icons/edit.png");
+
+    const deleteButton = document.createElement("img");
+    deleteButton.classList.add("delete-button");
+    deleteButton.classList.add("img-button");
+    deleteButton.src = chrome.runtime.getURL("./assets/oth-icons/delete.png");
+    deleteButton.addEventListener("click", () => {
+      deleteMessage(messageContainer);
+    });
+
+    const copyButton = document.createElement("img");
+    copyButton.classList.add("copy-button");
+    copyButton.classList.add("img-button");
+    copyButton.src = chrome.runtime.getURL("./assets/oth-icons/copy.png");
+
+    const crudIconDiv = document.createElement("div");
+    crudIconDiv.classList.add("crud-icon-div");
+    crudIconDiv.classList.add("hidden");
+
+    crudIconDiv.appendChild(copyButton);
+    crudIconDiv.appendChild(deleteButton);
+    crudIconDiv.appendChild(editButton);
+
+    messageContainer.appendChild(crudIconDiv);
+
+    messageContainer.addEventListener("mouseover", () => {
+      crudIconDiv.classList.remove("hidden");
+    });
+
+    messageContainer.addEventListener("mouseout", () => {
+      crudIconDiv.classList.add("hidden");
+    });
+  }
+  messageContainer.appendChild(messageDiv);
+  parent.appendChild(messageContainer);
 
   parent.scrollTop = parent.scrollHeight;
 
