@@ -1,5 +1,3 @@
-// utils/textareaHandler.js
-
 export function initializeTextarea(
   textarea,
   maxRows,

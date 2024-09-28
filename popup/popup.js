@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (chatHeader) {
-    chatHeader.textContent = ""; // Clear any existing text
+    chatHeader.textContent = "";
     typeText(chatHeader, randomMessage);
   }
 });

@@ -69,7 +69,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return true; // keeps the message channel open until sendResponse is called
   } else if (msg.text === "fetchProductInfo") {
     fetchProductInfo(sendResponse, msg.product);
-    return true; // keeps the message channel open until sendResponse is called
+    return true;
   } else {
     console.error(`Unknown message text: ${msg.text}`);
     sendResponse({ error: `Unknown message text: ${msg.text}` });
