@@ -1,120 +1,91 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="popup.css" />
-    <title>Document</title>
+    <title>Mivro</title>
   </head>
 
   <body>
     <div class="header">
-      <img class="mivro-icon" src="../assets/oth-icons/mivro.svg" alt="mivro" />
+      <img
+        class="mivro-icon"
+        src="../../assets/icons/misc/mivro.svg"
+        alt="mivro"
+      />
     </div>
 
     <div class="chat container hidden">
-      <div class="chat-header"></div>
       <div class="input-container">
-        <div class="icon-div" id="upload-button">
-          <input type="file" id="file-input" style="display: none" />
-          <img
-            src="../assets/oth-icons/attachment.png"
-            alt="attach"
-            srcset=""
-            class="icon"
-          />
-        </div>
         <textarea class="inp" placeholder="Message..." rows="1"></textarea>
         <div class="send icon-div" id="send-button">
-          <img
-            src="../assets/oth-icons/send.png"
-            alt="send"
-            srcset=""
-            class="icon"
-          />
+          <img src="../../assets/icons/misc/send.png" alt="send" class="icon" />
         </div>
       </div>
     </div>
     <div class="marketplace container hidden">
-      <div class="temp-para">Feature Under Development</div>
+      <div class="temp-para">Coming Soon</div>
     </div>
     <div class="search container hidden">
       <div class="search-container">
-        <div class="icon-div" id="upload-button">
-          <input type="file" id="file-input" style="display: none" />
+        <div class="send icon-div">
           <img
-            src="../assets/oth-icons/mic.png"
-            alt="attach"
-            srcset=""
+            src="../../assets/icons/misc/search.png"
+            alt="search"
             class="icon"
           />
         </div>
         <textarea class="inp" placeholder="Search..." rows="1"></textarea>
-        <div class="send icon-div" id="send-button">
-          <img
-            src="../assets/oth-icons/search.png"
-            alt="send"
-            srcset=""
-            class="icon"
-          />
-        </div>
+        <div class="spinner hidden"></div>
       </div>
     </div>
-    <div class="profile container">
+    <div class="profile container hidden">
       <div class="profile-header">
         <div class="profile-image">
-          <img src="../assets/images/user.jpeg" alt="user-profile" srcset="" />
+          <div class="profile-avatar" id="profile-avatar"></div>
         </div>
         <div class="profile-info">
-          <div class="profile-name">Rishi Chirchi</div>
-          <div class="profile-email">rishi@mivro.org</div>
+          <div class="profile-name" id="profile-name">Loading...</div>
+          <div class="profile-email" id="profile-email"></div>
         </div>
       </div>
 
       <div class="account-settings profile-option">
         <div class="profile-text">Account Settings</div>
         <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
+          <img src="../../assets/icons/misc/arrow.png" alt="Arrow Icon" />
         </div>
       </div>
       <div class="privicy-security profile-option">
         <div class="profile-text">Privacy and Security</div>
         <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
+          <img src="../../assets/icons/misc/arrow.png" alt="Arrow Icon" />
         </div>
       </div>
       <div class="activity-records profile-option">
         <div class="profile-text">Activity and Records</div>
         <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
+          <img src="../../assets/icons/misc/arrow.png" alt="Arrow Icon" />
         </div>
       </div>
       <div class="notifications-preference profile-option">
         <div class="profile-text">Notification Preferences</div>
         <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
+          <img src="../../assets/icons/misc/arrow.png" alt="Arrow Icon" />
         </div>
       </div>
       <div class="support-feedback profile-option">
         <div class="profile-text">Support and Feedback</div>
         <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
-        </div>
-      </div>
-      <div class="legal profile-option">
-        <div class="profile-text">Legal</div>
-        <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
-        </div>
-      </div>
-      <div class="advanced profile-option">
-        <div class="profile-text">Advanced</div>
-        <div>
-          <img src="../assets/oth-icons/arrow.png" alt="Arrow Icon" />
+          <img src="../../assets/icons/misc/arrow.png" alt="Arrow Icon" />
         </div>
       </div>
 
-      <div class="logout">Logout</div>
+      <div class="logout">
+        <img src="../../assets/icons/misc/logout.png" alt="Logout" />
+        Logout
+      </div>
     </div>
 
     <!-- Navigation bar -->
@@ -124,7 +95,7 @@
           <a href="#">
             <img
               class="grey"
-              src="../assets/nav-icons/chat.png"
+              src="../../assets/icons/navigation/chat.png"
               alt="chat"
               id="chat-nav"
             />
@@ -135,7 +106,7 @@
           <a href="#">
             <img
               class="grey"
-              src="../assets/nav-icons/marketplace.png"
+              src="../../assets/icons/navigation/marketplace.png"
               alt="marketplace"
             />
             Marketplace
@@ -145,7 +116,7 @@
           <a href="#">
             <img
               class="grey"
-              src="../assets/nav-icons/search.png"
+              src="../../assets/icons/navigation/search.png"
               alt="search"
             />
             Search
@@ -153,7 +124,10 @@
         </li>
         <li class="active">
           <a href="#">
-            <img src="../assets/nav-icons/profile.png" alt="profile" />
+            <img
+              src="../../assets/icons/navigation/profile.png"
+              alt="profile"
+            />
             Profile
           </a>
         </li>

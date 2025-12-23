@@ -1,4 +1,4 @@
-# Mivro Browser Extension
+﻿# Mivro Browser Extension
 
 This is the browser extension for the Mivro project, built with JavaScript, HTML, and CSS. It enhances the user's online shopping experience by integrating Mivro's features directly into supported e-commerce websites.
 
@@ -6,41 +6,35 @@ This is the browser extension for the Mivro project, built with JavaScript, HTML
 
 ## Repository Structure
 
-### Root Directory (`/`)
+The codebase follows a feature-based architecture with clear separation of concerns:
 
-- **`background.js`**: Handles API requests to the Mivro Python server, acting as a bridge between content scripts and the backend.
-- **`utils.js`**: Contains functions for scraping product titles from supported e-commerce websites, which are required for performing database lookup.
-- **`manifest.json`**: Defines the extension's configuration, including permissions, background scripts, content scripts, and other metadata necessary for the extension to function within the browser.
+### Root Directory
 
-### Assets (`assets/`)
+- **manifest.json**: Extension configuration with permissions and scripts
 
-This directory contains all the icons and images used by the extension, organized into the following subfolders:
+### src/ - Source Code
 
-- **`btn-icons/`**: Icons used specifically by the content scripts for various UI elements.
-- **`ext-icons/`**: Icons that are shared between content scripts and the popup interface.
-- **`food-icons/`**: Icons representing different food categories, used within the content scripts.
-- **`nav-icons/`**: Icons utilized within the popup's navigation menu.
-- **`oth-icons/`**: Additional images, including the project logo and other backup icons.
+- **background/**: Service worker and API handlers
+  - api-handlers.js: Handles API requests and icon fetching
+  - background.js: Main service worker with message listeners
+- **content/**: Content scripts for web page integration
+  - auth-listener.js: Handles authentication from Mivro web app
+  - content-main.js: Main content script for e-commerce sites
+  - content-script.css: Styling for injected UI components
+- **popup/**: Popup UI, pages, and utilities
+  - pages/: Chat, marketplace, search, profile pages
+  - utils/: Chat handlers, CRUD operations, navigation, textarea handling
+  - popup.html, popup.css, popup.js: Main popup interface
+- **shared/**: Shared code across extension
+  - api/: API client and endpoint configurations
+  - auth-storage.js: Authentication credential management
+  - constants.js: Shared constants and configurations
+- **lib/**: Third-party libraries (Markdown parser)
 
-### Content Scripts (`content-scripts/`)
+### assets/ - Icons and Images
 
-This directory contains scripts and styles that interact directly with the web pages on which the extension is active:
-
-- **`content-script.css`**: Contains the styles applied to the extension's UI elements embedded within supported e-commerce sites.
-- **`content-script.js`**: Responsible for rendering the extension's interface on web pages and interacting with `background.js` to fetch and display data.
-
-### Popup (`popup/`)
-
-This directory contains files for rendering and managing the extension's popup window, offering users additional functionality:
-
-- **`lib/`**: Includes a Markdown parser used to format content within the chatbot interface.
-- **`utils/`**:
-  - **`chat.js`**: Facilitates communication with the Gemini AI chatbot through the Python server.
-  - **`navigation.js`**: Manages user interactions with the popup’s navigation elements.
-  - **`textareaHandler.js`**: Supports the chat UI within the popup, handling user input and interface behavior.
-- **`popup.html`**: Defines the structure and layout of the extension's popup window.
-- **`popup.css`**: Contains styles for the popup interface.
-- **`popup.js`**: Manages user interactions and data flow using the `utils` folder for additional functionalities.
+- **icons/**: Categorized by type (extension, buttons, navigation, food, misc)
+- **images/**: User images and visual assets
 
 ## Getting Started
 
@@ -48,62 +42,100 @@ Follow these steps to set up and run the Mivro Browser Extension on your local m
 
 ### Prerequisites
 
-- [Node.js >= 20.14.0](https://nodejs.org/dist/v20.14.0/node-v20.14.0-x64.msi).
-- [Google Chrome](https://www.google.com/chrome) browser.
+- [Node.js >= 22.20.0](https://nodejs.org/dist/v22.20.0/node-v22.20.0-x64.msi)
+- [Google Chrome](https://www.google.com/chrome) browser
+- Mivro Web Application running on `http://localhost:3000` (for development)
+- Mivro Backend Server running on `http://localhost:5000` (for API requests)
 
 ### Installation
 
-1. **Fork the Repository**:
-
-   - Go to the [Mivro Browser Extension repository](https://github.com/1MindLabs/mivro-browser-extension) and click "Fork" to create a copy under your GitHub account.
-
-2. **Clone the Repository**:
+1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/<your-username>/browser-extension.git
+   git clone https://github.com/1MindLabs/mivro-extension.git
+   cd mivro-extension
    ```
 
-3. **Navigate to the Project Directory**:
+2. **Configure Environment** (Optional):
+
+   - Open `config.js` in the root directory
+   - For **development**: Keep `IS_PRODUCTION = false` (uses `localhost:3000`)
+   - For **production**: Set `IS_PRODUCTION = true` (uses `mivro.1mindlabs.org`)
+
+   ```javascript
+   export const IS_PRODUCTION = false;
+   export const WEB_URL = IS_PRODUCTION
+     ? "https://mivro.1mindlabs.org"
+     : "http://localhost:3000";
+   export const API_URL = IS_PRODUCTION
+     ? "https://mivro-api.1mindlabs.org/api/v1"
+     : "http://localhost:5000/api/v1";
+   ```
+
+3. **Create Distribution Package** (Optional):
+
+   To create a zip file for distribution or submission to Chrome Web Store:
+
+   ```powershell
+   Compress-Archive -Path .\* -DestinationPath mivro-extension.zip -Force
+   ```
+
+4. **Load Extension in Chrome**:
+
+   - Open Chrome and navigate to `chrome://extensions`
+   - Enable **Developer mode** (toggle in top right corner)
+   - Click **Load unpacked** button (top left)
+   - Select the `mivro-extension` folder from your file system
+
+5. **Start Required Services**:
+
+   **Backend Server:**
 
    ```bash
-   cd browser-extension
+   python app.py
+   # Server runs on http://localhost:5000
    ```
 
-4. **Set Up the Extension on Chrome**:
-   - Open Chrome and go to `chrome://extensions`.
-   - Enable "Developer mode" (top right corner).
-   - Click "Load unpacked" (top left corner).
-   - Select the `browser-extension` folder.
+   **Website (for authentication):**
 
-## Usage
+   ```bash
+   npm run dev
+   # Website runs on http://localhost:3000
+   ```
 
-1. **Navigate to any of the following supported websites**:
+### First-Time Setup
 
-   - [BigBasket](https://www.bigbasket.com)
-   - [Blinkit](https://www.blinkit.com)
-   - [Swiggy](https://www.swiggy.com)
-   - [Zepto](https://www.zeptonow.com)
-   - [Jiomart](https://www.jiomart.com)
-   - [Amazon](https://www.amazon.com)
-   - [Flipkart](https://www.flipkart.com)
+1. **Authenticate the Extension**:
 
-2. **Select and open any product**. The browser extension will appear on the right side of the screen. Click on the extension icon to access detailed information.
+   - Click the Mivro extension icon in Chrome toolbar
+   - You'll be redirected to `localhost:3000/signin?source=extension`
+   - Sign in with your credentials or create a new account
+   - The tab will close automatically after successful authentication
+   - Extension is now ready to use!
 
-3. **If the extension doesn’t appear on the product page**, try refreshing the page or check the Developer Console for errors.
+2. **Test the Extension**:
+
+   - Navigate to any supported e-commerce website:
+     - [Zepto](https://www.zeptonow.com)
+     - [Blinkit](https://www.blinkit.com)
+     - [BigBasket](https://www.bigbasket.com)
+     - [Swiggy Instamart](https://www.swiggy.com/instamart)
+     - [JioMart](https://www.jiomart.com)
+     - [Flipkart](https://www.flipkart.com)
+     - [Amazon India](https://www.amazon.in)
+   - Open any product page
+   - The Mivro sidebar will appear on the right side with product analysis
+
+3. **Use the Popup**:
+   - Click the extension icon to open the popup
+   - Navigate between tabs: Chat, Marketplace, Search, Profile
+   - Chat with Savora AI for recipe suggestions
+   - View and manage your profile settings
 
 ## Documentation
 
-For detailed documentation, please visit the [Documentation Repository](https://github.com/1MindLabs/mivro-documentation).
+For detailed documentation, visit the [Documentation Repository](https://github.com/1MindLabs/mivro-documentation).
 
 ## Contributing
 
-We welcome contributions! Please follow the guidelines in our [Contributing Guide](https://github.com/1MindLabs/mivro-documentation/blob/main/CONTRIBUTING.md) to get started.
-
-## License
-
-This project is licensed under the [MIT License](https://github.com/1MindLabs/mivro-documentation/blob/main/LICENSE).
-
-## Acknowledgments
-
-- [Open Food Facts](https://world.openfoodfacts.org) for providing access to a comprehensive food product database.
-- [All Contributors](https://github.com/1MindLabs/mivro-browser-extension/graphs/contributors) for their valuable contributions to the development and improvement of this project.
+We welcome contributions! Follow the guidelines in our [Contributing Guide](https://github.com/1MindLabs/mivro-documentation/blob/main/CONTRIBUTING.md).

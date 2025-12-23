@@ -1,43 +1,63 @@
 {
   "name": "Mivro",
-  "description": "Web extension for personalized product profiling",
+  "description": "AI-powered nutrition assistant for personalized product profiling and healthier food choices",
   "version": "1.0.0",
   "manifest_version": 3,
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "src/background/background.js",
+    "type": "module"
   },
   "action": {
-    "default_popup": "popup/popup.html"
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Mivro - AI Nutrition Assistant",
+    "default_icon": {
+      "16": "assets/icons/extension/icon-16.png",
+      "32": "assets/icons/extension/icon-32.png",
+      "48": "assets/icons/extension/icon-48.png"
+    }
   },
   "icons": {
-    "16": "assets/ext-icons/icon-16.png",
-    "32": "assets/ext-icons/icon-32.png",
-    "48": "assets/ext-icons/icon-48.png",
-    "64": "assets/ext-icons/icon-64.png",
-    "128": "assets/ext-icons/icon-128.png",
-    "256": "assets/ext-icons/icon-256.png",
-    "512": "assets/ext-icons/icon-512.png"
+    "16": "assets/icons/extension/icon-16.png",
+    "32": "assets/icons/extension/icon-32.png",
+    "48": "assets/icons/extension/icon-48.png",
+    "64": "assets/icons/extension/icon-64.png",
+    "128": "assets/icons/extension/icon-128.png",
+    "256": "assets/icons/extension/icon-256.png",
+    "512": "assets/icons/extension/icon-512.png"
   },
   "content_scripts": [
     {
       "matches": [
-        "https://www.bigbasket.com/pd/*",
-        "https://www.blinkit.com/prn/*",
-        "https://www.swiggy.com/instamart/item/*",
         "https://www.zeptonow.com/pn/*",
+        "https://www.blinkit.com/prn/*",
+        "https://www.bigbasket.com/pd/*",
+        "https://www.swiggy.com/instamart/item/*",
         "https://www.jiomart.com/p/groceries/*",
-        "https://www.amazon.in/*/dp/*",
-        "https://www.flipkart.com/*"
+        "https://www.flipkart.com/*",
+        "https://www.amazon.in/*/dp/*"
       ],
-      "css": ["content-scripts/content-script.css"],
-      "js": ["content-scripts/content-script.js"]
+      "css": ["src/content/content-script.css"],
+      "js": ["src/content/content-main.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://mivro.1mindlabs.org/*", "http://localhost:3000/*"],
+      "js": ["src/content/auth-listener.js"],
+      "run_at": "document_idle"
     }
   ],
-  "permissions": ["activeTab"],
-  "host_permissions": ["http://127.0.0.1:5000/"],
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": [
+    "https://mivro-api.1mindlabs.org/*",
+    "http://localhost:5000/*"
+  ],
   "web_accessible_resources": [
     {
-      "resources": ["*.js", "*.png"],
+      "resources": [
+        "assets/icons/**/*.png",
+        "assets/icons/**/*.svg",
+        "assets/images/**/*"
+      ],
       "matches": ["<all_urls>"]
     }
   ]
