@@ -38,6 +38,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       if (auth) {
         fetchProductInfo(sendResponse, msg.product, auth);
       } else {
+        console.warn("[Mivro] User not authenticated");
         sendResponse({ error: "Authentication required" });
       }
     });

@@ -46,7 +46,7 @@
       "run_at": "document_idle"
     }
   ],
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["storage"],
   "host_permissions": [
     "https://mivro-api.1mindlabs.org/*",
     "http://localhost:5000/*"
