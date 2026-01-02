@@ -6,8 +6,6 @@ This is the browser extension for the Mivro project, built with JavaScript, HTML
 
 ## Repository Structure
 
-The codebase follows a feature-based architecture with clear separation of concerns:
-
 ### Root Directory
 
 - **manifest.json**: Extension configuration with permissions and scripts

@@ -23,14 +23,12 @@ export async function initializeProfilePage() {
   }
 
   const profileOptions = document.querySelectorAll(".profile-option");
-  profileOptions.forEach((option) => {
-    const textElement = option.querySelector(".profile-text");
-    const text = textElement.textContent
-      .trim()
-      .toLowerCase()
-      .replace(/ /g, "-");
+  profileOptions.forEach((option, index) => {
     option.addEventListener("click", () => {
-      window.open(`${WEB_URL}/${text}`, "_blank");
+      // First 3 items (0,1,2) go to /dashboard
+      // Last 2 items (3,4) go to /settings
+      const path = index < 3 ? "dashboard" : "settings";
+      window.open(`${WEB_URL}/${path}`, "_blank");
     });
   });
 

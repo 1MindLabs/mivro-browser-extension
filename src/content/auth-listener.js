@@ -13,6 +13,13 @@ window.addEventListener("message", (event) => {
     return;
   }
 
+  if (event.data && event.data.type === "MIVRO_CLOSE_WINDOW") {
+    setTimeout(() => {
+      window.close();
+    }, 500);
+    return;
+  }
+
   if (event.data && event.data.type === "MIVRO_AUTH_SUCCESS") {
     const { email, password, name } = event.data;
 

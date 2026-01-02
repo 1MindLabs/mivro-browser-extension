@@ -49,7 +49,7 @@ export function fetchProductInfo(sendResponse, product, auth) {
       sendResponse({ productInfo: productInfo });
     })
     .catch((error) => {
-      console.error("Backend API Error:", error);
+      console.error("API Error:", error);
       sendResponse({ error: error.toString() });
     });
 }
